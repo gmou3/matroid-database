@@ -1,0 +1,8 @@
+# python -m build
+src/matroid_database.egg-info/
+src/matroid_database/__pycache__/
+dist/
+
+# pip wheel
+build/
+matroid_database-*.whl
