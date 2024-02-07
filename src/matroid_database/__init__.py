@@ -12,8 +12,8 @@ Tests::
 
 >>> for m in all_matroids_bases(2, 1):
 ...     print(m)
-[[0], [1]]
-[[1]]
+[(0,), (1,)]
+[(1,)]
 
 >>> for m in all_matroids_revlex(2, 2):
 ...     print(m)
@@ -21,7 +21,7 @@ Tests::
 
 >>> for m in all_matroids_bases(2, 2):
 ...     print(m)
-[[0, 1]]
+[(0, 1)]
 
 >>> for m in all_matroids_revlex(5, 2):
 ...     print(m)
@@ -130,12 +130,10 @@ def all_matroids_bases(n, r):
     def revlex_sort_key(s):
         return tuple(reversed(s))
 
+    subsets = sorted(combinations(range(n), r), key=revlex_sort_key)
+
     for revlex in all_matroids_revlex(n, r):
-        subsets = sorted(combinations(range(n), r), key=revlex_sort_key)
-        B = []  # bases
-        for i, c in enumerate(revlex):
-            if c == '*':
-                B.append(list(subsets[i]))
+        B = [ s for s, c in zip(subsets, revlex) if c == '*' ]
         yield B
 
 
@@ -149,10 +147,8 @@ def unorientable_matroids_bases(n, r):
     def revlex_sort_key(s):
         return tuple(reversed(s))
 
+    subsets = sorted(combinations(range(n), r), key=revlex_sort_key)
+
     for revlex in unorientable_matroids_revlex(n, r):
-        subsets = sorted(combinations(range(n), r), key=revlex_sort_key)
-        B = []  # bases
-        for i, c in enumerate(revlex):
-            if c == '*':
-                B.append(list(subsets[i]))
+        B = [ s for s, c in zip(subsets, revlex) if c == '*' ]
         yield B
