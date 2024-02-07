@@ -1,0 +1,37 @@
+name: Build distributions
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  # Cancel previous runs of this workflow for the same branch
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  pypi:
+    name: Build sdist and wheel (and upload to PyPI on release tags)
+    runs-on: ubuntu-latest
+    env:
+      CAN_DEPLOY: ${{ secrets.SAGEMATH_PYPI_API_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+      - name: build
+        run: |
+          python3 -m pip install build
+          python3 -m build .
+      - uses: actions/upload-artifact@v3
+        with:
+          path: "dist/*"
+          name: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.SAGEMATH_PYPI_API_TOKEN }}
+          skip_existing: true
+          verbose: true
+        if: env.CAN_DEPLOY == 'true' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
