@@ -1,7 +1,9 @@
-Python interface to database of matroids
+Python interface to matroid database
+====================================
 
-This database was retrieved on 2023.12.02 from
-https://www-imai.is.s.u-tokyo.ac.jp/~ymatsu/matroid/index.html
+This database was retrieved from
+<https://www-imai.is.s.u-tokyo.ac.jp/~ymatsu/matroid/index.html>
+(Yoshitake Matsumoto, *Database of Matroids*, 2012; accessed: 2023.12.02).
 
 Usage:
 

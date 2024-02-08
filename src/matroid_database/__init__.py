@@ -1,5 +1,5 @@
 r"""
-Python interface to database of matroids.
+Python interface to matroid database.
 
 Tests::
 
@@ -66,7 +66,6 @@ unorientable: (r=3, n=7-11), (r=4, n=7-9)
 [1, 5, 23, 108, 940, 190214]
 >>> [sum(1 for m in all_matroids_bases(n, 4)) for n in range(4, 10)]
 [1, 5, 23, 108, 940, 190214]
-
 
 >>> [sum(1 for m in unorientable_matroids_revlex(n, 3)) for n in range(7, 12)]
 [1, 3, 18, 201, 9413]
