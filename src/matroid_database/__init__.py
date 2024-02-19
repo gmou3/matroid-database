@@ -43,9 +43,9 @@ Tests::
 Traceback (most recent call last):
 ...
 ValueError: unable to open .../allr5n10.txt.xz
-Available:
-all: (r=1-2, n<=12), (r=3, n<=11), (r=4, n<=9)
-unorientable: (r=3, n=7-11), (r=4, n=7-9)
+Available (n, r):
+all: (<=12, 1-2), (<=11, 3), (<=9, 4)
+unorientable: (7-11, 3), (7-9, 4)
 
 >>> [sum(1 for m in all_matroids_revlex(n, 1)) for n in range(1, 13)]
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
@@ -82,19 +82,17 @@ unorientable: (r=3, n=7-11), (r=4, n=7-9)
 def _open_data(module, name):
     import lzma
     from importlib.resources import files
-    from io import TextIOWrapper
 
-    path = files(module).joinpath(name)
+    path = files(module).joinpath(name).with_suffix('.txt.xz')
     try:
-        xz = path.with_suffix(".txt.xz").open("rb")
-        return TextIOWrapper(lzma.open(xz))
+        return lzma.open(path, 'rt')
     except FileNotFoundError:
         raise ValueError(
-            "unable to open %s.txt.xz" % path +
-            "\nAvailable:" +
-            "\nall: (r=1-2, n<=12), (r=3, n<=11), (r=4, n<=9)" +
-            "\nunorientable: (r=3, n=7-11), (r=4, n=7-9)"
-            )
+            "unable to open %s" % path +
+            "\nAvailable (n, r):" +
+            "\nall: (<=12, 1-2), (<=11, 3), (<=9, 4)" +
+            "\nunorientable: (7-11, 3), (7-9, 4)"
+        )
 
 
 def all_matroids_revlex(n, r):
@@ -132,7 +130,7 @@ def all_matroids_bases(n, r):
     subsets = sorted(combinations(range(n), r), key=revlex_sort_key)
 
     for revlex in all_matroids_revlex(n, r):
-        B = [ s for s, c in zip(subsets, revlex) if c == '*' ]
+        B = [s for s, c in zip(subsets, revlex) if c == '*']
         yield B
 
 
@@ -149,5 +147,5 @@ def unorientable_matroids_bases(n, r):
     subsets = sorted(combinations(range(n), r), key=revlex_sort_key)
 
     for revlex in unorientable_matroids_revlex(n, r):
-        B = [ s for s, c in zip(subsets, revlex) if c == '*' ]
+        B = [s for s, c in zip(subsets, revlex) if c == '*']
         yield B

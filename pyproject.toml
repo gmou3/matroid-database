@@ -8,9 +8,22 @@ version = "0.2"
 description = "Python interface to matroid database"
 readme = "README.rst"
 requires-python = ">=3.9"
+keywords = ["mathematics", "combinatorics", "matroids"]
+license = { file = "LICENSE" }
+classifiers = [
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Mathematics",
+  "Topic :: Software Development :: Libraries :: Python Modules"
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[project.urls]
+Homepage = "https://github.com/gmou3/matroid-database"
+Documentation = "https://github.com/gmou3/matroid-database/blob/main/README.rst"
+Repository = "https://github.com/gmou3/matroid-database.git"
 
 [tool.pytest.ini_options]
 addopts = "--doctest-modules --doctest-glob='*.rst'"
