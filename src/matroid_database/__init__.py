@@ -83,9 +83,9 @@ def _open_data(module, name):
     import lzma
     from importlib.resources import files
 
-    path = files(module).joinpath(name).with_suffix('.txt.xz')
+    path = files(module).joinpath(name + '.txt.xz')
     try:
-        return lzma.open(path, 'rt')
+        return lzma.open(path.open('rb'), 'rt')
     except FileNotFoundError:
         raise ValueError(
             "unable to open %s" % path +
@@ -100,8 +100,7 @@ def all_matroids_revlex(n, r):
     Return an iterator over the revlex encodings of all matroids of given
     number of elements and rank.
     """
-    from . import _all
-    with _open_data(_all, f"allr{r}n{n:02d}") as f:
+    with _open_data(__package__, f"_all/allr{r}n{n:02d}") as f:
         while s := f.readline():
             yield s.strip()
 
@@ -111,8 +110,8 @@ def unorientable_matroids_revlex(n, r):
     Return an iterator over the revlex encodings of unorientable matroids of
     given number of elements and rank.
     """
-    from . import _unorientable
-    with _open_data(_unorientable, f"unorientabler{r}n{n:02d}") as f:
+    type = "unorientable"
+    with _open_data(__package__, f"_{type}/{type}r{r}n{n:02d}") as f:
         while s := f.readline():
             yield s.strip()
 
