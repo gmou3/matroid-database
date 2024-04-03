@@ -1,20 +1,18 @@
 Python interface to matroid database
 ====================================
 
-This database was retrieved from
-<https://www-imai.is.s.u-tokyo.ac.jp/~ymatsu/matroid/index.html>
-(Yoshitake Matsumoto, *Database of Matroids*, 2012; accessed: 2023.12.02).
+This database was retrieved from Yoshitake Matsumoto's *Database of Matroids* [1]_.
 
 Installation
 ============
 
-Install either from ``PyPI`` (<https://pypi.org/project/matroid-database>)
+Install either from ``PyPI`` [2]_
 
 .. code-block:: bash
 
   python3 -m pip install matroid-database
 
-or from the ``github`` source (<https://github.com/gmou3/matroid-database>)
+or from the ``GitHub`` source [3]_
 
 .. code-block:: bash
 
@@ -64,3 +62,12 @@ Usage
   [(0, 3), (1, 3), (2, 3)]
   [(1, 3), (2, 3)]
   [(2, 3)]
+
+.. [1] | Yoshitake Matsumoto, *Database of Matroids*, 2012.
+       | <https://www-imai.is.s.u-tokyo.ac.jp/~ymatsu/matroid/index.html> (accessed: 2023.12.02)
+
+.. [2] | PyPI: matroid-database.
+       | <https://pypi.org/project/matroid-database>
+
+.. [3] | GitHub: matroid-database.
+       | <https://github.com/gmou3/matroid-database>
