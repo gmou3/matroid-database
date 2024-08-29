@@ -10,18 +10,15 @@ Install either from ``PyPI`` [2]_
 
 .. code-block:: bash
 
-  python3 -m pip install matroid-database
+  python -m pip install matroid-database
 
 or from the ``GitHub`` source [3]_
 
 .. code-block:: bash
 
   git clone https://github.com/gmou3/matroid-database.git
-  python3 -m build matroid-database/
-  python3 -m pip install matroid-database/
-
-**Note**: For an externally managed environment, you may wish to create a
-virtual environment, or use the ``pip`` flag ``--break-system-packages``.
+  python -m build matroid-database/
+  python -m pip install matroid-database/
 
 Usage
 =====
