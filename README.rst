@@ -27,8 +27,8 @@ Usage
 
 .. code-block:: python
 
-  >>> from matroid_database import all_matroids_revlex
-  >>> for m in all_matroids_revlex(2, 5):
+  >>> from matroid_database import all_matroids_colex
+  >>> for m in all_matroids_colex(2, 5):
   ...     print(m)
   **********
   0*********
@@ -44,8 +44,8 @@ Usage
   00000000**
   000000000*
 
-  >>> from matroid_database import unorientable_matroids_revlex
-  >>> for m in unorientable_matroids_revlex(3, 8):
+  >>> from matroid_database import unorientable_matroids_colex
+  >>> for m in unorientable_matroids_colex(3, 8):
   ...     print(m)
   0******0******0**********0********0*******0****0**0*****
   0******0******0***0******0*0**0*************************

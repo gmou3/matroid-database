@@ -5,7 +5,7 @@ Tests::
 
 >>> from matroid_database import *
 
->>> for m in all_matroids_revlex(0, 0):
+>>> for m in all_matroids_colex(0, 0):
 ...     print(m)
 *
 
@@ -13,7 +13,7 @@ Tests::
 ...     print(m)
 [()]
 
->>> for m in all_matroids_revlex(1, 2):
+>>> for m in all_matroids_colex(1, 2):
 ...     print(m)
 **
 0*
@@ -23,7 +23,7 @@ Tests::
 [(0,), (1,)]
 [(1,)]
 
->>> for m in all_matroids_revlex(2, 2):
+>>> for m in all_matroids_colex(2, 2):
 ...     print(m)
 *
 
@@ -31,7 +31,7 @@ Tests::
 ...     print(m)
 [(0, 1)]
 
->>> for m in all_matroids_revlex(2, 5):
+>>> for m in all_matroids_colex(2, 5):
 ...     print(m)
 **********
 0*********
@@ -47,7 +47,7 @@ Tests::
 00000000**
 000000000*
 
->>> list(all_matroids_revlex(5, 10))
+>>> list(all_matroids_colex(5, 10))
 Traceback (most recent call last):
 ...
 ValueError: unable to open .../r05n10.txt(.xz)
@@ -73,7 +73,7 @@ unorientable: (3, 7-11), (4, 7-9)
 >>> for r, counts in enumerate(all_matroids_expected):
 ...     for n in range(r, r + len(counts)):
 ...         expected = counts[n - r]
-...         assert sum(1 for m in all_matroids_revlex(r, n)) == expected
+...         assert sum(1 for m in all_matroids_colex(r, n)) == expected
 ...         if expected < 10**6:
 ...             assert sum(1 for m in all_matroids_bases(r, n)) == expected
 
@@ -84,7 +84,7 @@ unorientable: (3, 7-11), (4, 7-9)
 >>> for r, n_range, counts in unorientable_matroids_tests:
 ...     for n in n_range:
 ...         expected = counts[n - n_range.start]
-...         assert sum(1 for m in unorientable_matroids_revlex(r, n)) == expected
+...         assert sum(1 for m in unorientable_matroids_colex(r, n)) == expected
 ...         assert sum(1 for m in unorientable_matroids_bases(r, n)) == expected
 """
 
@@ -113,9 +113,9 @@ def _open_data(module, name):
         )
 
 
-def all_matroids_revlex(r, n):
+def all_matroids_colex(r, n):
     """
-    Return an iterator over the revlex encodings of all matroids of given
+    Return an iterator over the colex encodings of all matroids of given
     number of elements and rank.
     """
     with _open_data(__package__, f"_all/r{r:02d}n{n:02d}") as f:
@@ -123,9 +123,9 @@ def all_matroids_revlex(r, n):
             yield s.strip()
 
 
-def unorientable_matroids_revlex(r, n):
+def unorientable_matroids_colex(r, n):
     """
-    Return an iterator over the revlex encodings of unorientable matroids of
+    Return an iterator over the colex encodings of unorientable matroids of
     given number of elements and rank.
     """
     with _open_data(__package__, f"_unorientable/r{r:02d}n{n:02d}") as f:
@@ -140,13 +140,13 @@ def all_matroids_bases(r, n):
     """
     from itertools import combinations
 
-    def revlex_sort_key(s):
+    def colex_sort_key(s):
         return tuple(reversed(s))
 
-    subsets = sorted(combinations(range(n), r), key=revlex_sort_key)
+    subsets = sorted(combinations(range(n), r), key=colex_sort_key)
 
-    for revlex in all_matroids_revlex(r, n):
-        B = [s for s, c in zip(subsets, revlex) if c == '*']
+    for colex in all_matroids_colex(r, n):
+        B = [s for s, c in zip(subsets, colex) if c == '*']
         yield B
 
 
@@ -157,11 +157,11 @@ def unorientable_matroids_bases(r, n):
     """
     from itertools import combinations
 
-    def revlex_sort_key(s):
+    def colex_sort_key(s):
         return tuple(reversed(s))
 
-    subsets = sorted(combinations(range(n), r), key=revlex_sort_key)
+    subsets = sorted(combinations(range(n), r), key=colex_sort_key)
 
-    for revlex in unorientable_matroids_revlex(r, n):
-        B = [s for s, c in zip(subsets, revlex) if c == '*']
+    for colex in unorientable_matroids_colex(r, n):
+        B = [s for s, c in zip(subsets, colex) if c == '*']
         yield B
